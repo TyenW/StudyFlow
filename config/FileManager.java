@@ -11,7 +11,7 @@ public class FileManager {
         List<Subject> subjects = new ArrayList<>();
         String currentPeriod = "Geral";
         Pattern periodPattern = Pattern.compile("^##\\s*.*(\\dº\\s*Período).*");
-        Pattern subjectPattern = Pattern.compile("^\\s*-\\s*\\[([ xcd])\\]\\s*(.+)$");
+        Pattern subjectPattern = Pattern.compile("^\\s*-\\s*\\[([ xcdXCD])\\]\\s*(.+)$");
 
         for (String line : lines) {
             Matcher periodMatcher = periodPattern.matcher(line);
@@ -21,7 +21,7 @@ public class FileManager {
 
             Matcher subjectMatcher = subjectPattern.matcher(line);
             if (subjectMatcher.matches()) {
-                String status = subjectMatcher.group(1);
+                String status = subjectMatcher.group(1).toLowerCase();
                 String name = subjectMatcher.group(2);
                 subjects.add(new Subject(line, status, name, currentPeriod));
             }
@@ -43,7 +43,7 @@ public class FileManager {
         }
 
         if (index != -1) {
-            String newLine = oldLine.replaceFirst("\\[[ xcd]\\]", "[" + newStatusChar + "]");
+            String newLine = oldLine.replaceFirst("\\[[ xcdXCD]\\]", "[" + newStatusChar + "]");
             lines.set(index, newLine);
             Files.write(planningPath, lines);
             target.originalLine = newLine;

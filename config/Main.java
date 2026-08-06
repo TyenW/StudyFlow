@@ -1430,7 +1430,15 @@ public class Main {
 
     private static void pressEnterToContinue(Scanner scanner) {
         System.out.print("\nPressione " + ANSI_BOLD + "ENTER" + ANSI_RESET + " para voltar ao menu...");
-        scanner.nextLine();
+        try {
+            if (scanner != null && scanner.hasNextLine()) {
+                scanner.nextLine();
+            } else {
+                new Scanner(System.in).nextLine();
+            }
+        } catch (Exception e) {
+            // Ignore EOF
+        }
     }
 
     private static void exitProgram(Scanner scanner) {

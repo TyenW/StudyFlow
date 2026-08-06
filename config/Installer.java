@@ -5,9 +5,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Installer {
 
@@ -85,155 +83,176 @@ public class Installer {
         Path faculdadeDir = rootDir.resolve("Faculdade");
         Path planningPath = faculdadeDir.resolve(PLANNING_FILE_NAME);
 
-        // If folder Faculté doesn't exist, we run the setup
         if (!Files.exists(faculdadeDir) || !Files.exists(planningPath)) {
             runSetup(rootDir, faculdadeDir, planningPath);
         }
     }
 
     private static void runSetup(Path rootDir, Path faculdadeDir, Path planningPath) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("\n==================================================");
-        System.out.println("🚀 INSTALAÇÃO DO SISTEMA CURSAR & OBSIDIAN");
-        System.out.println("==================================================");
-        System.out.println("Parece que é a primeira vez que você roda este sistema neste diretório.");
-        System.out.println("Vamos criar a estrutura básica de pastas e configurar as disciplinas.");
-        System.out.println("Pressione ENTER para começar...");
-        scanner.nextLine();
-
         try {
-            // 1. Create Folders
-            System.out.println("\n[1/4] Criando pastas do sistema...");
+            // 1. Create Directories & Default Planning File
             Files.createDirectories(faculdadeDir);
             Files.createDirectories(rootDir.resolve("config").resolve("json"));
-            System.out.println("✔ Pasta 'Faculdade/' criada!");
-            System.out.println("✔ Pasta 'config/json/' criada!");
-
-            // 2. Write Default Planning Grid
-            System.out.println("\n[2/4] Criando arquivo de planejamento curricular...");
             Files.write(planningPath, DEFAULT_PLANNING_CONTENT.getBytes(StandardCharsets.UTF_8));
-            System.out.println("✔ Arquivo 'Faculdade/" + PLANNING_FILE_NAME + "' inicializado!");
 
-            // 3. Declare subject progress
-            System.out.println("\n[3/4] Configuração do seu Progresso Acadêmico");
-            System.out.println("Para cada disciplina da grade, digite:");
-            System.out.println("  1 - Se você JÁ CONCLUIU (marcar com [x])");
-            System.out.println("  2 - Se você ESTÁ CURSANDO agora (marcar com [c])");
-            System.out.println("  Qualquer outra tecla (ou ENTER) - Se ainda é pendente (marcar com [ ])");
-            System.out.println("--------------------------------------------------");
-
+            // Load subjects
             List<Subject> subjects = FileManager.loadSubjects(planningPath);
             List<String> planningLines = Files.readAllLines(planningPath);
             List<String> updatedLines = new ArrayList<>(planningLines);
 
-            List<Subject> currentSubjects = new ArrayList<>();
-
+            // Build options list for Interactive Menu
+            List<String> subjectOptions = new ArrayList<>();
             for (Subject sub : subjects) {
-                System.out.print(String.format("[%s] %s: ", sub.period, sub.name));
-                String input = scanner.nextLine().trim();
+                subjectOptions.add("[" + sub.period + "] " + sub.name);
+            }
+
+            // Step 1: Select COMPLETED subjects [x]
+            String completedTitle = "🎓 PASSO 1: Selecione as disciplinas que você JÁ CONCLUIU";
+            List<Integer> completedIndices = InteractiveMenu.selectMultiple(completedTitle, subjectOptions);
+            Set<Integer> completedSet = new HashSet<>(completedIndices);
+
+            // Build remaining list for CURSANDO subjects [c]
+            List<Integer> remainingIndices = new ArrayList<>();
+            List<String> remainingOptions = new ArrayList<>();
+            for (int i = 0; i < subjects.size(); i++) {
+                if (!completedSet.contains(i)) {
+                    remainingIndices.add(i);
+                    remainingOptions.add(subjectOptions.get(i));
+                }
+            }
+
+            // Step 2: Select CURSANDO subjects [c]
+            Set<Integer> cursandoSet = new HashSet<>();
+            if (!remainingOptions.isEmpty()) {
+                String cursandoTitle = "📚 PASSO 2: Selecione as disciplinas que você ESTÁ CURSANDO AGORA";
+                List<Integer> cursandoSubIndices = InteractiveMenu.selectMultiple(cursandoTitle, remainingOptions);
+                for (int subIdx : cursandoSubIndices) {
+                    cursandoSet.add(remainingIndices.get(subIdx));
+                }
+            }
+
+            // Update planning lines & create current subject folders
+            List<Subject> currentSubjects = new ArrayList<>();
+            int countCompleted = 0;
+            int countCursando = 0;
+            int countPending = 0;
+
+            for (int i = 0; i < subjects.size(); i++) {
+                Subject sub = subjects.get(i);
                 String statusChar = " ";
-                if (input.equals("1")) {
+                if (completedSet.contains(i)) {
                     statusChar = "x";
-                } else if (input.equals("2")) {
+                    countCompleted++;
+                } else if (cursandoSet.contains(i)) {
                     statusChar = "c";
+                    countCursando++;
+                    currentSubjects.add(sub);
+                } else {
+                    countPending++;
                 }
 
                 // Update line in planning file
-                for (int i = 0; i < updatedLines.size(); i++) {
-                    if (updatedLines.get(i).equals(sub.originalLine)) {
-                        String newLine = sub.originalLine.replaceFirst("\\[[ xcd]\\]", "[" + statusChar + "]");
-                        updatedLines.set(i, newLine);
+                for (int l = 0; l < updatedLines.size(); l++) {
+                    if (updatedLines.get(l).equals(sub.originalLine)) {
+                        String newLine = sub.originalLine.replaceFirst("\\[[ xcdXCD]\\]", "[" + statusChar + "]");
+                        updatedLines.set(l, newLine);
                         sub.originalLine = newLine;
                         sub.statusChar = statusChar;
                         break;
                     }
                 }
-
-                if (statusChar.equals("c")) {
-                    currentSubjects.add(sub);
-                }
             }
 
             Files.write(planningPath, updatedLines, StandardCharsets.UTF_8);
-            System.out.println("✔ Progresso das disciplinas salvo no arquivo de planejamento!");
 
             // Create folders for currently taking subjects
             if (!currentSubjects.isEmpty()) {
-                System.out.println("\nCriando pastas para as matérias que você está cursando...");
                 for (Subject sub : currentSubjects) {
                     Path folder = rootDir.resolve(sub.getSanitizedFolderName());
                     if (!Files.exists(folder)) {
                         Files.createDirectories(folder);
                         FolderManager.createSubjectSubfolders(folder, sub.name);
-                        System.out.println("  ✔ Criada pasta: " + sub.getSanitizedFolderName());
                     }
                 }
             }
 
-            // 4. Setup configurations
-            System.out.println("\n[4/4] Configuração de Integrações de API");
-            System.out.print("Deseja configurar a integração com o Canvas LMS agora? (S/n): ");
-            String canvasAns = scanner.nextLine().trim().toLowerCase();
+            // Interactive step: Canvas Integration
+            List<String> canvasChoices = Arrays.asList(
+                "❌ Pular integração com Canvas LMS por enquanto",
+                "✅ Configurar integração com Canvas LMS agora"
+            );
+            int canvasOpt = InteractiveMenu.select("🌐 CONFIGURAÇÃO: Deseja conectar sua conta do Canvas LMS?", canvasChoices);
 
             String canvasUrl = "https://pucminas.instructure.com";
             String canvasToken = "";
 
-            if (canvasAns.isEmpty() || canvasAns.equals("s") || canvasAns.equals("sim")) {
+            if (canvasOpt == 1) {
+                Scanner sc = new Scanner(System.in);
+                System.out.println("\n--- CONFIGURAÇÃO CANVAS LMS ---");
                 System.out.print("URL do seu Canvas [" + canvasUrl + "]: ");
-                String urlInput = scanner.nextLine().trim();
+                String urlInput = sc.nextLine().trim();
                 if (!urlInput.isEmpty()) {
                     canvasUrl = urlInput;
                 }
                 System.out.print("Cole o seu Token de Acesso do Canvas: ");
-                canvasToken = scanner.nextLine().trim();
+                canvasToken = sc.nextLine().trim();
             }
 
-            System.out.print("\nDeseja configurar a integração com o Google Tasks agora? (s/N): ");
-            String tasksAns = scanner.nextLine().trim().toLowerCase();
+            // Interactive step: Google Tasks Integration
+            List<String> tasksChoices = Arrays.asList(
+                "❌ Pular integração com Google Tasks por enquanto",
+                "✅ Configurar integração com Google Tasks agora"
+            );
+            int tasksOpt = InteractiveMenu.select("📱 CONFIGURAÇÃO: Deseja conectar sua conta do Google Tasks?", tasksChoices);
 
             String googleClientId = "";
             String googleClientSecret = "";
 
-            if (tasksAns.equals("s") || tasksAns.equals("sim")) {
+            if (tasksOpt == 1) {
+                Scanner sc = new Scanner(System.in);
+                System.out.println("\n--- CONFIGURAÇÃO GOOGLE TASKS ---");
                 System.out.print("Digite o seu Google Client ID: ");
-                googleClientId = scanner.nextLine().trim();
+                googleClientId = sc.nextLine().trim();
                 System.out.print("Digite o seu Google Client Secret: ");
-                googleClientSecret = scanner.nextLine().trim();
+                googleClientSecret = sc.nextLine().trim();
             }
 
-            // Save configurations to config/json/config.json
+            // Save config
             Path configPath = rootDir.resolve("config").resolve("json").resolve("config.json");
-            java.util.Map<String, String> configMap = new java.util.HashMap<>();
+            Map<String, String> configMap = new HashMap<>();
             configMap.put("canvas_url", canvasUrl);
             configMap.put("canvas_token", canvasToken);
             if (!googleClientId.isEmpty() && !googleClientSecret.isEmpty()) {
                 configMap.put("google_client_id", googleClientId);
                 configMap.put("google_client_secret", googleClientSecret);
             }
-
             FileManager.saveConfig(configPath, configMap);
-            System.out.println("✔ Configurações de API salvas com sucesso em: config/json/config.json");
 
-            // Setup Git (optional)
-            System.out.print("\nDeseja rodar 'git init' para começar o controle de versão neste cofre? (s/N): ");
-            String gitAns = scanner.nextLine().trim().toLowerCase();
-            if (gitAns.equals("s") || gitAns.equals("sim")) {
+            // Interactive step: Git Repository Init
+            List<String> gitChoices = Arrays.asList(
+                "❌ Não inicializar Git agora",
+                "✅ Inicializar repositório Git ('git init')"
+            );
+            int gitOpt = InteractiveMenu.select("🛠️ CONFIGURAÇÃO: Deseja inicializar o controle de versão Git?", gitChoices);
+
+            if (gitOpt == 1) {
                 try {
                     ProcessBuilder pb = new ProcessBuilder("git", "init");
                     pb.inheritIO().start().waitFor();
-                    System.out.println("✔ Repositório Git inicializado!");
-                } catch (Exception e) {
-                    System.out.println("⚠ Não foi possível executar 'git init'. Verifique se o Git está instalado no seu terminal.");
-                }
+                } catch (Exception e) {}
             }
 
+            // Completion Banner
             System.out.println("\n==================================================");
-            System.out.println("🎉 INSTALAÇÃO CONCLUÍDA COM SUCESSO!");
+            System.out.println("🎉 INSTALAÇÃO E CONFIGURAÇÃO CONCLUÍDAS COM SUCESSO!");
+            System.out.println("==================================================");
+            System.out.println("  ✔ " + countCompleted + " Disciplinas Concluídas [x]");
+            System.out.println("  ✔ " + countCursando + " Disciplinas Cursando Agora [c]");
+            System.out.println("  ✔ " + countPending + " Disciplinas Pendentes [ ]");
             System.out.println("==================================================");
             System.out.println("Seu ambiente de estudos StudyFlow está pronto.");
-            System.out.println("Abra o menu inicial para ver as opções.");
-            System.out.println("Pressione ENTER para iniciar a aplicação...");
-            scanner.nextLine();
+            System.out.println("Pressione ENTER para abrir o menu principal...");
+            try { new Scanner(System.in).nextLine(); } catch (Exception e) {}
 
         } catch (Exception e) {
             System.err.println("\n❌ Erro durante a instalação: " + e.getMessage());
