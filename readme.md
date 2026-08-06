@@ -242,10 +242,27 @@ StudyFlow/
 - **Java Development Kit (JDK)**: Versão 11 ou superior ([OpenJDK 17+](https://adoptium.net/) ou JDK 21 recomendados).
 - **Git**: (Opcional) Para utilizar o assistente de controle de versão integrado.
 
-### 1. Compilação e Execução via Makefile (Recomendado)
+### 1. No Windows (PowerShell / Prompt de Comando)
+
+Você pode utilizar os scripts auxiliares incluídos no repositório:
+
+```powershell
+# Executar a aplicação (compila e roda automaticamente)
+.\build.ps1
+
+# Apenas compilar os fontes
+.\build.ps1 compile
+
+# Limpar os arquivos .class gerados
+.\build.ps1 clean
+```
+
+*(Ou usando `.\build.bat` no Prompt de Comando CMD).*
+
+### 2. No Linux / macOS (ou Windows com Make)
 
 ```bash
-# Compilar todos os arquivos Java com codificação UTF-8
+# Compilar todos os arquivos Java
 make compile
 
 # Executar a aplicação
@@ -255,13 +272,13 @@ make run
 make clean
 ```
 
-### 2. Compilação Direta pelo Terminal / PowerShell
+### 3. Comandos Nativos Diretos (Qualquer Terminal)
 
 ```bash
-# Compilar a aplicação
+# Compilação
 javac -encoding UTF-8 Cursar.java config/*.java
 
-# Executar definindo o charset UTF-8
+# Execução
 java "-Dfile.encoding=UTF-8" Cursar
 ```
 
