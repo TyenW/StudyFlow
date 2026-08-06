@@ -1,0 +1,16 @@
+Faculdade/config.json
+config/config.json
+config/json/config.json
+client_secret_*.json
+
+.google_tasks_meta.json
+.canvas_meta.json
+*.class
+
+
+# Arquivos grandes e livros
+*.pdf
+*.zip
+*.rar
+**/Livros/
+Cálculo II (CALC2)/5. Materiais de Apoio/Livros/volume2.pdf

@@ -1,0 +1,387 @@
+[
+    {
+        "Periodo": 1,
+        "Nome": "Algoritmos e Estruturas de Dados I",
+        "Ch": 120,
+        "Pre_requisito_ou_coorequisito": null,
+        "Id": "AEDs1"
+    },
+    {
+        "Periodo": 1,
+        "Nome": "Cálculo I",
+        "Ch": 80,
+        "Pre_requisito_ou_coorequisito": null,
+        "Id": "C1"
+    },
+    {
+        "Periodo": 1,
+        "Nome": "Desenvolvimento de Interfaces Web",
+        "Ch": 80,
+        "Pre_requisito_ou_coorequisito": null,
+        "Id": "DIW"
+    },
+    {
+        "Periodo": 1,
+        "Nome": "Filosofia: Razão e Modernidade",
+        "Ch": 40,
+        "Pre_requisito_ou_coorequisito": null,
+        "Id": "F:RM"
+    },
+    {
+        "Periodo": 1,
+        "Nome": "Introdução à Computação (extensionista)",
+        "Ch": 70,
+        "Pre_requisito_ou_coorequisito": null,
+        "Id": "IC"
+    },
+    {
+        "Periodo": 1,
+        "Nome": "Lab. de Iniciação à Programação",
+        "Ch": 50,
+        "Pre_requisito_ou_coorequisito": null,
+        "Id": "LIP"
+    },
+    {
+        "Periodo": 1,
+        "Nome": "Trab. Interdisciplinar I: Front-end",
+        "Ch": 45,
+        "Pre_requisito_ou_coorequisito": null,
+        "Id": "T11"
+    },
+    {
+        "Periodo": 2,
+        "Nome": "Algoritmos e Estruturas de Dados II",
+        "Ch": 120,
+        "Pre_requisito_ou_coorequisito": "Algoritmos e Estruturas de Dados I",
+        "Id": "AEDs2"
+    },
+    {
+        "Periodo": 2,
+        "Nome": "Arquitetura de Computadores I",
+        "Ch": 80,
+        "Pre_requisito_ou_coorequisito": "Algoritmos e Estruturas de Dados I",
+        "Id": "AC1"
+    },
+    {
+        "Periodo": 2,
+        "Nome": "Cultura Religiosa: Fenômeno Religioso",
+        "Ch": 40,
+        "Pre_requisito_ou_coorequisito": null,
+        "Id": "CR:FR"
+    },
+    {
+        "Periodo": 2,
+        "Nome": "Engenharia de Software I",
+        "Ch": 80,
+        "Pre_requisito_ou_coorequisito": "Algoritmos e Estruturas de Dados II (CO)",
+        "Id": "ES1"
+    },
+    {
+        "Periodo": 2,
+        "Nome": "Optativa I",
+        "Ch": 80,
+        "Pre_requisito_ou_coorequisito": null,
+        "Id": "O1"
+    },
+    {
+        "Periodo": 2,
+        "Nome": "Trab. Interdisciplinar II: Back-end",
+        "Ch": 25,
+        "Pre_requisito_ou_coorequisito": "Algoritmos e Estruturas de Dados II (CO), Eng. de Software I (CO)",
+        "Id": "T12"
+    },
+    {
+        "Periodo": 3,
+        "Nome": "Algoritmos e Estruturas de Dados III",
+        "Ch": 90,
+        "Pre_requisito_ou_coorequisito": "Algoritmos e Estruturas de Dados II, Trabalho Interdisciplinar II: Back-end",
+        "Id": "AEDS3"
+    },
+    {
+        "Periodo": 3,
+        "Nome": "Arquitetura de Computadores II",
+        "Ch": 80,
+        "Pre_requisito_ou_coorequisito": "Arquitetura de Computadores I",
+        "Id": "AC2"
+    },
+    {
+        "Periodo": 3,
+        "Nome": "Banco de Dados",
+        "Ch": 90,
+        "Pre_requisito_ou_coorequisito": "Algoritmos e Estruturas de Dados II, Trabalho Interdisciplinar II: Back-end",
+        "Id": "BD"
+    },
+    {
+        "Periodo": 3,
+        "Nome": "Cálculo II",
+        "Ch": 80,
+        "Pre_requisito_ou_coorequisito": "Cálculo I",
+        "Id": "C2"
+    },
+    {
+        "Periodo": 3,
+        "Nome": "Linguagens de Programação",
+        "Ch": 80,
+        "Pre_requisito_ou_coorequisito": "Algoritmos e Estruturas de Dados II",
+        "Id": "LP"
+    },
+    {
+        "Periodo": 3,
+        "Nome": "Trab. Interdisciplinar III: Pesquisa Aplicada",
+        "Ch": 25,
+        "Pre_requisito_ou_coorequisito": "Algoritmos e Estruturas de Dados II (CO)",
+        "Id": "T13"
+    },
+    {
+        "Periodo": 4,
+        "Nome": "Estatística e Probabilidade",
+        "Ch": 80,
+        "Pre_requisito_ou_coorequisito": "Cálculo I",
+        "Id": "EP"
+    },
+    {
+        "Periodo": 4,
+        "Nome": "Inteligência Artificial",
+        "Ch": 90,
+        "Pre_requisito_ou_coorequisito": "Estatística e Probabilidade (CO), Teoria dos Grafos e Computabilidade (CO)",
+        "Id": "IA"
+    },
+    {
+        "Periodo": 4,
+        "Nome": "Lab. de Desenvol. para Dispositivos Móveis",
+        "Ch": 40,
+        "Pre_requisito_ou_coorequisito": "Algoritmos e Estruturas de Dados II",
+        "Id": "LDDM"
+    },
+    {
+        "Periodo": 4,
+        "Nome": "Modelagem e Avaliação de Desempenho",
+        "Ch": 80,
+        "Pre_requisito_ou_coorequisito": "Estatística e Probabilidade (CO), Teoria dos Grafos e Computabilidade (CO)",
+        "Id": "MAD"
+    },
+    {
+        "Periodo": 4,
+        "Nome": "Optativa II",
+        "Ch": 80,
+        "Pre_requisito_ou_coorequisito": null,
+        "Id": "O2"
+    },
+    {
+        "Periodo": 4,
+        "Nome": "Teoria dos Grafos e Computabilidade",
+        "Ch": 120,
+        "Pre_requisito_ou_coorequisito": "Algoritmos e Estruturas de Dados II",
+        "Id": "TGC"
+    },
+    {
+        "Periodo": 4,
+        "Nome": "Trab. Interdisciplinar IV: Aplicações Móveis",
+        "Ch": 25,
+        "Pre_requisito_ou_coorequisito": "Inteligência Artificial (CO), Lab. de Desenvol. para Disp. Móveis (CO)",
+        "Id": "T14"
+    },
+    {
+        "Periodo": 5,
+        "Nome": "Arquitetura de Computadores III",
+        "Ch": 80,
+        "Pre_requisito_ou_coorequisito": "Arquitetura de Computadores II",
+        "Id": "AC3"
+    },
+    {
+        "Periodo": 5,
+        "Nome": "Engenharia de Software II",
+        "Ch": 80,
+        "Pre_requisito_ou_coorequisito": "Engenharia de Software I",
+        "Id": "ES2"
+    },
+    {
+        "Periodo": 5,
+        "Nome": "Optativa III",
+        "Ch": 80,
+        "Pre_requisito_ou_coorequisito": null,
+        "Id": "O3"
+    },
+    {
+        "Periodo": 5,
+        "Nome": "Projeto e Análise de Algoritmos",
+        "Ch": 80,
+        "Pre_requisito_ou_coorequisito": "Teoria dos Grafos e Computabilidade, Estatística e Probabilidade (CO)",
+        "Id": "PAA"
+    },
+    {
+        "Periodo": 5,
+        "Nome": "Redes de Computadores I",
+        "Ch": 80,
+        "Pre_requisito_ou_coorequisito": "Teoria dos Grafos e Computabilidade",
+        "Id": "R1"
+    },
+    {
+        "Periodo": 5,
+        "Nome": "Sistemas Operacionais",
+        "Ch": 80,
+        "Pre_requisito_ou_coorequisito": "Algoritmos e Estruturas de Dados II, Arquitetura de Computadores II",
+        "Id": "SO"
+    },
+    {
+        "Periodo": 5,
+        "Nome": "Trab. Interdisciplinar V: Sist. Computacionais",
+        "Ch": 25,
+        "Pre_requisito_ou_coorequisito": "Redes de Computadores I (CO), Arquitetura de Computadores III (CO), Sistemas Operacionais (CO)",
+        "Id": "T15"
+    },
+    {
+        "Periodo": 6,
+        "Nome": "Computação Distribuida",
+        "Ch": 60,
+        "Pre_requisito_ou_coorequisito": "Redes de Computadores I",
+        "Id": "CD"
+    },
+    {
+        "Periodo": 6,
+        "Nome": "Computação Paralela",
+        "Ch": 60,
+        "Pre_requisito_ou_coorequisito": "Algoritmos e Estruturas de Dados III, Arquitetura de Computadores III",
+        "Id": "CP"
+    },
+    {
+        "Periodo": 6,
+        "Nome": "Cultura Religiosa: Pessoa e Sociedade",
+        "Ch": 40,
+        "Pre_requisito_ou_coorequisito": null,
+        "Id": "CR:PS"
+    },
+    {
+        "Periodo": 6,
+        "Nome": "Fundamentos Teóricos da Computação",
+        "Ch": 80,
+        "Pre_requisito_ou_coorequisito": "Teoria dos Grafos e Computabilidade",
+        "Id": "FTC"
+    },
+    {
+        "Periodo": 6,
+        "Nome": "Geometria Analítica e Algebra Linear",
+        "Ch": 80,
+        "Pre_requisito_ou_coorequisito": null,
+        "Id": "GAAL"
+    },
+    {
+        "Periodo": 6,
+        "Nome": "Processamento e Análise de Imagens",
+        "Ch": 80,
+        "Pre_requisito_ou_coorequisito": "Projeto e Análise de Algoritmos (CO)",
+        "Id": "PAI"
+    },
+    {
+        "Periodo": 6,
+        "Nome": "Trab. Interdisciplinar VI: Sist. Paral. e Distrib.",
+        "Ch": 25,
+        "Pre_requisito_ou_coorequisito": "Computação Paralela (CO), Computação Distribuída (CO)",
+        "Id": "T16"
+    },
+    {
+        "Periodo": 7,
+        "Nome": "Compiladores",
+        "Ch": 80,
+        "Pre_requisito_ou_coorequisito": "Fundamentos Teóricos da Computação, Arquitetura de Computadores II",
+        "Id": "COMP"
+    },
+    {
+        "Periodo": 7,
+        "Nome": "Computação Gráfica",
+        "Ch": 80,
+        "Pre_requisito_ou_coorequisito": "Algoritmos e Estruturas de Dados II, Geometria Analítica e Algebra Linear",
+        "Id": "CG"
+    },
+    {
+        "Periodo": 7,
+        "Nome": "Filosofia: Antropologia e Ética",
+        "Ch": 80,
+        "Pre_requisito_ou_coorequisito": null,
+        "Id": "F:AE"
+    },
+    {
+        "Periodo": 7,
+        "Nome": "Redes de Computadores II",
+        "Ch": 80,
+        "Pre_requisito_ou_coorequisito": "Redes de Computadores I",
+        "Id": "R2"
+    },
+    {
+        "Periodo": 7,
+        "Nome": "Tópicos em Computação I",
+        "Ch": 40,
+        "Pre_requisito_ou_coorequisito": "Projeto e Análise de Algoritmos",
+        "Id": "TC1"
+    },
+    {
+        "Periodo": 7,
+        "Nome": "Tópicos em Computação II",
+        "Ch": 40,
+        "Pre_requisito_ou_coorequisito": "Projeto e Análise de Algoritmos",
+        "Id": "TC2"
+    },
+    {
+        "Periodo": 7,
+        "Nome": "Trabalho de Conclusão de Curso I",
+        "Ch": 70,
+        "Pre_requisito_ou_coorequisito": "Projeto e Análise de Algoritmos",
+        "Id": "TCC1"
+    },
+    {
+        "Periodo": 8,
+        "Nome": "Cibersegurança e Ethical Hacking",
+        "Ch": 40,
+        "Pre_requisito_ou_coorequisito": "Redes de Computadores II",
+        "Id": "TC3"
+    },
+    {
+        "Periodo": 8,
+        "Nome": "Computadores e Sociedade",
+        "Ch": 40,
+        "Pre_requisito_ou_coorequisito": null,
+        "Id": "CS"
+    },
+    {
+        "Periodo": 8,
+        "Nome": "Optativa IV",
+        "Ch": 80,
+        "Pre_requisito_ou_coorequisito": null,
+        "Id": "O4"
+    },
+    {
+        "Periodo": 8,
+        "Nome": "Otimização de Sistemas",
+        "Ch": 80,
+        "Pre_requisito_ou_coorequisito": "Teoria dos Grafos e Computabilidade, Geometria Analítica e Álgebra Linear",
+        "Id": "OS"
+    },
+    {
+        "Periodo": 8,
+        "Nome": "Segurança e Auditoria de Sistemas",
+        "Ch": 60,
+        "Pre_requisito_ou_coorequisito": "Engenharia de Software II",
+        "Id": "SAS"
+    },
+    {
+        "Periodo": 8,
+        "Nome": "Tópicos em Computação III",
+        "Ch": 40,
+        "Pre_requisito_ou_coorequisito": "Projeto e Análise de Algoritmos",
+        "Id": "TC3"
+    },
+    {
+        "Periodo": 8,
+        "Nome": "Tópicos em Computação IV",
+        "Ch": 40,
+        "Pre_requisito_ou_coorequisito": "Projeto e Análise de Algoritmos",
+        "Id": "TC4"
+    },
+    {
+        "Periodo": 8,
+        "Nome": "Trabalho de Conclusão de Curso II",
+        "Ch": 70,
+        "Pre_requisito_ou_coorequisito": "Trabalho de Conclusão de Curso I",
+        "Id": "TCC2"
+    }
+]
